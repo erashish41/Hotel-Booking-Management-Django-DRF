@@ -1,6 +1,6 @@
 from django.db import models
 from utils.models import BaseMixin
-from django.contrib.auth.models import User
+from user_auth.models import User
 
 # Create your models here.
 
