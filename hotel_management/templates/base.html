@@ -16,33 +16,44 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
+            {% if user.is_authenticated %}
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        {% if user.user_type == 'manager' %}
+                            <li class="nav-item">
+                                <a class="nav-link"  href="#">Hotels</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Rooms</a>
+                            </li>
+                        {% endif %}
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link"  href="#">Hotels</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Rooms</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">{{user.user_type}}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">{{user.username}}</a>
-                </li>
-                <li class="nav-item">
-                    <a href="" class="btn btn-danger">
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-sm btn-danger">Logout</button>
-                        </form>
-                    </a>
-                </li>
-            </ul>
-            </div>
+                        {% if user.user_type == 'customer' %}
+                            <li class="nav-item">
+                                <a class="nav-link"  href="#">Hotels1</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Rooms1</a>
+                            </li>
+                        {% endif %}
+
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">{{user.user_type}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">{{user.username}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <form action="{% url 'signout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
         </div>
         </nav>
     </div>
