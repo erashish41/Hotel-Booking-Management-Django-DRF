@@ -28,18 +28,12 @@ class UserLoginView(LoginView):
     def get_success_url(self):
         user = self.request.user
         if user.user_type == 'manager':
-            return reverse_lazy('manager')
+            return reverse_lazy('hotel_list')
         elif user.user_type == 'customer':
-            return reverse_lazy('customer')
+            return reverse_lazy('hotel_list')
         return reverse_lazy('login')
     
     
 class UserLogoutView(LogoutView):
      next_page = reverse_lazy('signin')   
      
-class ManagerDashboardView(TemplateView):
-    template_name = 'user_auth/manager.html'
-
-
-class CustomerDashboardView(TemplateView):
-    template_name = 'user_auth/customer.html'

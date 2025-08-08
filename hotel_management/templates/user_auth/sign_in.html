@@ -9,7 +9,6 @@
         <form method="post" action="">
             {% csrf_token %}
             {{ form|crispy }}
-
             <div class="d-flex justify-content-between mt-3">
                 <button class="btn btn-success w-50 me-2" type="submit">Sign In</button>
                 <a class="btn btn-warning w-50" href="{% url 'signup' %}">Don't have an account?</a>

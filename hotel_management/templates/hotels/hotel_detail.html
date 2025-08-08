@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Hotel Detail{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Hotel Detail</h2>
+
+    {% if hotel %}
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <h4 class="card-title">{{ hotel.name }}</h4>
+                <p><strong>Address:</strong> {{ hotel.address }}</p>
+                <p><strong>Type:</strong> {{ hotel.get_hotel_type_display }}</p>
+                <p><strong>Contact:</strong> {{ hotel.contact }}</p>
+                <p><strong>City:</strong> {{ hotel.destination.city }}</p>
+                <p><strong>Manager:</strong> {{ hotel.manager.username }}</p>
+
+                <p><strong>Facilities:</strong>
+                    {% if hotel.facilities.all %}
+                        {% for facility in hotel.facilities.all %}
+                            <span class="badge bg-info text-dark me-1">{{ facility.get_facility_type_display }}</span>
+                        {% endfor %}
+                    {% else %}
+                        <span class="text-muted">No facilities listed.</span>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a href="{% url 'hotel_list' %}" class="btn btn-success btn-sm">Back to List</a>
+
+                {% if user.user_type == "manager" %}
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateHote">
+                        Updated Hotel
+                    </button>
+
+                    <form method="POST" action="{% url 'hotel_delete' hotel.pk %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+
+
+    {% else %}
+        <p class="text-muted text-center">Hotel not found.</p>
+    {% endif %}
+
+
+    <!-- Room details -->
+    <h3 class="mt-5">Rooms in {{ hotel.name }}</h3>
+    {% if rooms %}
+        {% for room in rooms %}
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Room {{ room.room_number }} - {{ room.get_room_type_display }}</h5>
+                    <p><strong>Description:</strong> {{ room.description }}</p>
+                    <p><strong>Capacity:</strong> {{ room.person }} person(s)</p>
+                    <p><strong>Price:</strong> ${{ room.price }}</p>
+                    <p><strong>Check-in:</strong> {{ room.check_in }}</p>
+                    <p><strong>Check-out:</strong> {{ room.check_out }}</p>
+                    <p><strong>Amenities:</strong> {{ room.get_amenities_display }}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-end gap-3">
+                    {% if user.user_type == "manager" %}
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateRoom">
+                            update Room
+                        </button>
+
+                        <form method="POST" action="{% url 'room_delete' room.pk %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-muted">No rooms available for this hotel.</p>
+    {% endif %}
+
+
+
+    <!-- for Hotel update -->
+    <div class="modal fade" id="updateHote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Updated Hotel</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" action="">
+                {% csrf_token %}
+                {{form | crispy}}
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- for Room update -->
+    <div class="modal fade" id="updateRoom" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">update Room</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" action="">
+                {% csrf_token %}
+                {{form | crispy}}
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+</div>
+{% endblock %}
