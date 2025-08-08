@@ -54,11 +54,8 @@ class HotelDetailView(LoginRequiredMixin, SuccessMessageMixin, DetailView, Updat
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        hotel = self.get_object()
-        print("hotelllllll", hotel)
-        print(">>>>>>>>>", self.get_object())
-        context['form'] = HotelCreateForm(instance=hotel)
-        context['rooms'] = hotel.rooms.all() 
+        context['form'] = self.get_form()  
+        context['rooms'] = self.object.rooms.all()
         return context
 
     
