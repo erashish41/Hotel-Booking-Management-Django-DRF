@@ -11,3 +11,7 @@ class RoomCreateForm(forms.ModelForm):
         model = Room
         fields = "__all__"
         
+class ReviewCreateForm(forms.ModelForm):
+        class Meta:
+            model = Review
+            fields = ['comment']

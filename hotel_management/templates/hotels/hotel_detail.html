@@ -49,6 +49,7 @@
 
 
     <!-- Room details -->
+    <h2 class="text-center mb-4">Rooms Detail</h2>
     <h3 class="mt-5">Rooms in {{ hotel.name }}</h3>
     {% if rooms %}
         {% for room in rooms %}
@@ -125,6 +126,17 @@
         </div>
         </div>
     </div>
+    </div>
+
+    <h3>Leave a Review</h3>
+    <div class="container">
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ review_form|crispy }}
+        <input type="hidden" name="hotel_id" value="{{ hotel.id }}">
+        <button type="submit" class="btn btn-primary mt-2">Submit Review</button>
+    </form>
+
     </div>
 
 </div>
