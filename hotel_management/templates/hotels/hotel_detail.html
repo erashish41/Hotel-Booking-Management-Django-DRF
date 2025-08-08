@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
-
 {% block title %}Hotel Detail{% endblock %}
 
 {% block content %}
@@ -44,8 +43,6 @@
                 {% endif %}
             </div>
         </div>
-
-
     {% else %}
         <p class="text-muted text-center">Hotel not found.</p>
     {% endif %}
@@ -84,7 +81,6 @@
     {% else %}
         <p class="text-muted">No rooms available for this hotel.</p>
     {% endif %}
-
 
 
     <!-- for Hotel update -->
