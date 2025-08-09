@@ -56,9 +56,11 @@ class HotelDetailView(LoginRequiredMixin, SuccessMessageMixin, DetailView, Updat
         context = super().get_context_data(**kwargs)
         context['form'] = self.get_form()  
         context['rooms'] = self.object.rooms.all()
-        context['reviews'] = self.object.reviews.select_related('user') 
+        context['reviews'] = Review.objects.filter(hotel=self.object)
 
-        context['review_form'] = ReviewCreateForm()
+        # context['reviews'] = self.object.reviews.select_related('user') 
+
+        # context['review_form'] = ReviewCreateForm()
 
         return context
 
@@ -124,22 +126,26 @@ class RoomDeleteView(LoginRequiredMixin,SuccessMessageMixin,DeleteView):
 class ReviewCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Review
     form_class = ReviewCreateForm
-    template_name = 'hotels/hotel_detail.html'
-    success_message = 'Review added successfully'
     context_object_name = 'reviews'
 
+    success_message = 'Review added successfully'
+    
     def form_valid(self, form):
-        hotel_id = self.request.POST.get('hotel_id')
-        hotel = get_object_or_404(Hotel, id=hotel_id)
-
+        hotel = get_object_or_404(Hotel, pk=self.kwargs['pk'])
         review = form.save(commit=False)
         review.user = self.request.user
         review.hotel = hotel
+        review.star_rating = self.request.POST.get('star_rating')
         review.save()
-
-        return redirect('hotel_detail', pk=hotel.id)
-
+        return redirect('hotel_detail', pk=hotel.pk)
     
+    # def form_valid(self, form):
+    #     form.instance.user = self.request.user
+    #     form.instance.hotel_id = self.kwargs['pk']
+    #     form.save()
+    #     return redirect('hotel_detail', pk=self.kwargs['pk'])
+
+
 class ReviewDetailView(LoginRequiredMixin, SuccessMessageMixin, DetailView, UpdateView):
     model = Hotel
     template_name = 'hotels/hotel_detail.html'

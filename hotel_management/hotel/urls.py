@@ -15,7 +15,5 @@ urlpatterns = [
     path('rooms/<uuid:pk>',RoomDetailView.as_view(),name='room_detail'),
     path('rooms/<uuid:pk>/delete',RoomDeleteView.as_view(),name='room_delete'),
     
-    path('reviews/',ReviewCreateView.as_view(),name='review_create'),
-    path('reviews/<uuid:pk>',ReviewDetailView.as_view(),name='review_detail'),
-    path('reviews/<uuid:pk>/delete',ReviewDeleteView.as_view(),name='review_delete'),
+    path('hotels/<uuid:pk>/reviews/',ReviewCreateView.as_view(),name='review_create'),
 ]
