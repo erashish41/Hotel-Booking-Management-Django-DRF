@@ -1,12 +1,11 @@
 from rest_framework import serializers
 from hotel.models import Hotel, Room, Review, Facility, Destination
 from user_auth.models import User
-
-class UserSerializer(serializers.ModelSerializer):
+        
+class UserPublicSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = "__all__"
-        
+        fields = ["id", "username", "first_name", "last_name"]
 
 
 
@@ -28,7 +27,7 @@ class HotelMiniSerializer(serializers.ModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     hotel = HotelMiniSerializer()
-    user = UserSerializer()
+    user = UserPublicSerializer()
     class Meta:
         model = Review
         fields = "__all__"
@@ -43,7 +42,7 @@ class RoomSerializer(serializers.ModelSerializer):
         
 class HotelSerializer(serializers.ModelSerializer):
     destination = DestinationSerializer()
-    manager = UserSerializer()
+    manager = UserPublicSerializer()
     facilities = FacilitySerializer(many=True)
     class Meta:
         model = Hotel
