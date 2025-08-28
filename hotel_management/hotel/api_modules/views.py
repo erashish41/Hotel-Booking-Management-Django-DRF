@@ -9,7 +9,6 @@ from hotel.api_modules.serializers import (HotelSerializer, HotelMiniSerializer,
                                            UserPublicSerializer
 )
 
-
 class HotelViewSet(viewsets.ModelViewSet):
     queryset = Hotel.objects.all()
     serializer_class = HotelSerializer

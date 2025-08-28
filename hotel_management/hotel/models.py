@@ -2,6 +2,7 @@ from django.db import models
 from utils.models import BaseMixin
 from user_auth.models import User
 
+
 # Create your models here.
 
 HOTEL_TYPE = (

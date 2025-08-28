@@ -22,5 +22,5 @@ urlpatterns = [
     path('accounts/', include('user_auth.urls')),
     path('', include('hotel.urls')),
     path('api/', include('hotel.api_modules.urls')),
-    path('api-auth', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
