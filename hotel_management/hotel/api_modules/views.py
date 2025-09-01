@@ -8,6 +8,7 @@ from hotel.api_modules.serializers import (HotelSerializer, HotelMiniSerializer,
                                            FacilitySerializer, DestinationSerializer,
                                            UserPublicSerializer
 )
+from rest_framework.permissions import AllowAny
 
 class HotelViewSet(viewsets.ModelViewSet):
     queryset = Hotel.objects.all()
@@ -49,6 +50,7 @@ class FacilityViewSet(viewsets.ModelViewSet):
 class DestinationViewSet(viewsets.ModelViewSet):
     queryset = Destination.objects.all()
     serializer_class = DestinationSerializer
+    permission_classes = [AllowAny]
     
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
