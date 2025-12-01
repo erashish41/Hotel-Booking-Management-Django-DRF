@@ -11,7 +11,7 @@ username - ashish@41
 password - testpassword123
 
 
-# Tech Stack :
+# Tech Stack:
 - Backend: Django, Django REST Framework (DRF)
 - Language: Python 3.x
 - Database: SQLite (default, can switch to PostgreSQL/MySQL)
