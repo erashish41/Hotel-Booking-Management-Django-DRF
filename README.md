@@ -82,5 +82,7 @@ password - testpassword123
 19. Now visit: http://127.0.0.1:8000/admin/
    - (Login with your superuser credentials.)
 
-19.  Add Templates (HTML Files)
+20. Add Business login (views.py)
+
+21.  Add Templates (HTML Files)
 
