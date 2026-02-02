@@ -9,10 +9,16 @@ from hotel.api_modules.serializers import (HotelSerializer, HotelMiniSerializer,
                                            UserPublicSerializer
 )
 from rest_framework.permissions import AllowAny
+from hotel.api_modules.paginations import CustomPagination
+from django_filters.rest_framework import DjangoFilterBackend
+from hotel.api_modules.filters import HotelFilter
 
 class HotelViewSet(viewsets.ModelViewSet):
     queryset = Hotel.objects.all()
     serializer_class = HotelSerializer
+    pagination_class = CustomPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = HotelFilter
         
     @action(methods=["get"], detail=True)
     def rooms(self, request,pk=None):
